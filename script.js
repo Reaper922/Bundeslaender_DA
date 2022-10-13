@@ -5,6 +5,9 @@ let statesArr = [];
 let firstCharactersArr = [];
 
 
+/**
+ * Function that runs after the page is fully loaded.
+ */
 async function init() {
     await loadStates(file);
     renderStates(statesArr);
@@ -13,11 +16,19 @@ async function init() {
 }
 
 
+/**
+ * Loads the states from the given JSON file.
+ * @param {String} file JSON file to load
+ */
 async function loadStates(file) {
     statesArr = await fetch(file).then(response => response.json());
 }
 
 
+/**
+ * Renders the states from the given states array into the states container.
+ * @param {Array} states States array
+ */
 function renderStates(states) {
     const statesContainer = document.getElementById('states-container');
 
@@ -28,6 +39,10 @@ function renderStates(states) {
 }
 
 
+/**
+ * Gets the characters from the given states array.
+ * @param {Array} states States array
+ */
 function getCharacters(states) {
     states.forEach(state => {
         const firstCharacter = state.name.charAt(0).toUpperCase();
@@ -39,6 +54,10 @@ function getCharacters(states) {
 }
 
 
+/**
+ * Renders the characters from the given array into the characets container.
+ * @param {Array} characters Characters array
+ */
 function renderCharacters(characters) {
     const charactersContainer = document.getElementById('characters-container');
 
@@ -49,6 +68,24 @@ function renderCharacters(characters) {
 }
 
 
+/**
+ * Filters the statesArr array with the given character and renders the result to the states container.
+ * @param {String} character Character string
+ */
+function filterStates(character) {
+    const filteredStates = statesArr.filter(state => {
+        return state.name.charAt(0).toUpperCase() === character;
+    })
+    
+    renderStates(filteredStates);
+}
+
+
+/**
+ * Creates the HTML template for a state.
+ * @param {Object} state State object
+ * @returns HTML state template
+ */
 function stateTemp(state) {
     return `
         <a href="${state.url}" target="_blank">
@@ -60,19 +97,16 @@ function stateTemp(state) {
 }
 
 
+/**
+ * Creates the HTML template for the character filter.
+ * @param {String} character Character
+ * @returns HTML character filter template
+ */
 function characterTemp(character) {
     return `
         <li onclick="filterStates('${character}')">${character}</li>`;
 }
 
-
-function filterStates(character) {
-    const filteredStates = statesArr.filter(state => {
-        return state.name.charAt(0).toUpperCase() === character;
-    })
-
-    renderStates(filteredStates);
-}
 
 
 init();
