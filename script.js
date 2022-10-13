@@ -1,6 +1,6 @@
 'use strict';
 
-const file = './bundesländer.json';
+const file = './bundeslaender.json';
 let statesArr = [];
 let firstCharactersArr = [];
 
@@ -9,10 +9,15 @@ let firstCharactersArr = [];
  * Function that runs after the page is fully loaded.
  */
 async function init() {
-    await loadStates(file);
-    renderStates(statesArr);
-    getCharacters(statesArr);
-    renderCharacters(firstCharactersArr);
+    try {
+        await loadStates(file);
+        renderStates(statesArr);
+        getCharacters(statesArr);
+        renderCharacters(firstCharactersArr);
+    } catch (error) {
+        console.error(error);
+        renderErrorMessage();
+    }
 }
 
 
@@ -105,6 +110,17 @@ function stateTemp(state) {
 function characterTemp(character) {
     return `
         <li onclick="filterStates('${character}')">${character}</li>`;
+}
+
+
+/**
+ * In case of an error, this error message is rendered.
+ */
+function renderErrorMessage() {
+    const statesContainer = document.getElementById('states-container');
+    
+    statesContainer.style = 'grid-template-columns: 1fr;';
+    statesContainer.innerHTML = '<h4>Beim laden der Seite ist ein Fehler aufgetreten. Versuchen Sie es später erneut.</h4>';
 }
 
 
