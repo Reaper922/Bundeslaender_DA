@@ -40,7 +40,7 @@ function renderStates(states) {
     statesContainer.innerHTML = '';
     states.forEach(state => {
         statesContainer.innerHTML += stateTemp(state);
-    })
+    });
 }
 
 
@@ -55,7 +55,7 @@ function getCharacters(states) {
         if (!firstCharactersArr.includes(firstCharacter)) {
             firstCharactersArr.push(firstCharacter);
         }
-    })
+    });
 }
 
 
@@ -69,7 +69,9 @@ function renderCharacters(characters) {
     charactersContainer.innerHTML = '';
     characters.forEach(character => {
         charactersContainer.innerHTML += characterTemp(character);
-    })
+    });
+
+    charactersContainer.innerHTML += characterTemp('Alle');
 }
 
 
@@ -78,11 +80,15 @@ function renderCharacters(characters) {
  * @param {String} character Character string
  */
 function filterStates(character) {
-    const filteredStates = statesArr.filter(state => {
-        return state.name.charAt(0).toUpperCase() === character;
-    })
-    
-    renderStates(filteredStates);
+    if (character === 'Alle') {
+        renderStates(statesArr);
+    } else {
+        const filteredStates = statesArr.filter(state => {
+            return state.name.charAt(0).toUpperCase() === character;
+        });
+        
+        renderStates(filteredStates);
+    }
 }
 
 
