@@ -85,6 +85,10 @@ li {
     user-select: none;
 }
 
+li:last-child {
+    width: 55px;
+}
+
 li:hover {
     background: var(--hover-color);
 }
